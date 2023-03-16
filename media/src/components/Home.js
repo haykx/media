@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from "./Header";
-import PostContainer from "./PostContainer";
+import DiscussionContainer from "./DiscussionContainer";
 import HomeHead from "./HomeHead";
 import {Link, useParams} from 'react-router-dom'
 
@@ -9,7 +9,7 @@ function Home() {
     return (
         <div>
             <HomeHead/>
-            <PostContainer page={page}/>
+            <DiscussionContainer page={page}/>
         </div>
 
     );
