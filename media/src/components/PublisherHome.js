@@ -1,5 +1,5 @@
 import React from 'react';
-import PostFilteredContainer from "./PostFilteredContainer";
+import DiscussionFilteredContainer from "./DiscussionFilteredContainer";
 import {useParams} from "react-router-dom";
 
 function PublisherHome() {
@@ -8,7 +8,7 @@ function PublisherHome() {
 
     return (
         <div>
-            <PostFilteredContainer id={id} />
+            <DiscussionFilteredContainer id={id} />
         </div>
     );
 }

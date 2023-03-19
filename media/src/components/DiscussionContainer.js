@@ -18,7 +18,14 @@ function DiscussionContainer(props){
             {discussions.map( (d, index) => (
                     <div className={'post-box'} key={d?.id}>
                         <Link className="post-title flicker" to={`/discussion/${d?.id}`}>{d?.question}</Link>
-                        <span className="post-date">{new Date(d?.created).toLocaleDateString("hy-HY", {year: 'numeric', month: 'long', day: 'numeric' , hour: 'numeric', minute:'2-digit'})}</span>
+                        <div>
+                            <span className="post-date">
+                                {new Date(d?.created).toLocaleDateString("en", {year: 'numeric', month: 'short', day: 'numeric' , hour: 'numeric', minute:'2-digit'})}
+                            </span>
+                            <span>
+                                likes: {d?.likes}
+                            </span>
+                        </div>
                     </div>
             ))}
         </div>
