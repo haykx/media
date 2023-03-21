@@ -5,7 +5,7 @@ function Header() {
     return (
         <header>
             <div className="nav container">
-                <Link className="logo" to="/home">148</Link>
+                <Link className="logo" to="/home">Home</Link>
                 <div>
                     <Link className="sign-up" to="/sign-up" >Sign Up</Link>
                     <Link className="login" to="/login" >Log In</Link>
