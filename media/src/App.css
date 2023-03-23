@@ -45,6 +45,7 @@ section {
 
 .container {
   /*padding: 5%;*/
+  min-height: calc(100vh - 159px - 130px - 30px);
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -334,8 +335,14 @@ header.shadow .logo{
 }
 
 .back-home {
+  display: flex;
+  align-items: center;
+  fill: var(--second-color);
   color: var(--second-color);
   font-size: 0.9rem;
+  cursor: pointer;
+  width: fit-content;
+  margin: -20px 0 0 0;
 }
 
 .header-title {
@@ -546,6 +553,10 @@ header.shadow .logo{
   box-shadow: 0 4px 14px rgba(119, 80, 173, 0.403);
 }
 
+.discussion svg {
+  width: 32px;
+}
+
 .like {
   display: flex;
   align-items: center;
@@ -592,6 +603,23 @@ header.shadow .logo{
   padding: 15px;
   width: 100%;
   margin: 15px 0;
+}
+
+.reply-box {
+  flex-direction: column;
+}
+
+.show-hide-button {
+  border: none;
+  background-color: var(--container-color);
+  color: var(--bg-color);
+  font-size: 1rem;
+  padding: 5px 15px;
+  margin: 15px 0;
+  border-radius: 25px;
+  box-shadow: 0 4px 14px rgba(119, 80, 173, 0.403);
+  width: fit-content;
+
 }
 
 .details {

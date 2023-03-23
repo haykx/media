@@ -45,9 +45,9 @@ function Comment(props) {
                     </div>
                 </div>
                 <Like scope={'comment'} id={comment?.id} likes={comment?.likes} isLiked={comment?.liked} />
-                <button style={{display: comment?.replyCount ? "flex" : "none"}} onClick={showMore}>Show {comment?.replyCount} replies</button>
+                <button className={'show-hide-button'} style={{display: comment?.replyCount ? "flex" : "none"}} onClick={showMore}>{display ? "Hide" : "Show"} {comment?.replyCount} replies</button>
                 <AddComment scope={'comment'} parent={comment?.id} />
-                <div style={{display: display ? "flex" : "none"}}>
+                <div className={'reply-box'} style={{display: display ? "flex" : "none"}}>
                     {comment?.replies?.map((r, j) => (
                         <Comment comment={r} size={size}/>
                     ))}
