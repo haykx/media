@@ -9,6 +9,7 @@ import Home from "./components/Home"
 import PublisherHome from "./components/PublisherHome";
 import PostCreate from "./components/PostCreate";
 import SignUp from "./components/SignUp";
+import Survey from "./components/Survey";
 
 
 window.addEventListener('scroll',() =>{
@@ -27,9 +28,10 @@ function App() {
                 <Route exact path="/login" element={<Login />} />
                 <Route exact path="/sign-up" element={<SignUp />} />
                 <Route exact path="/discussion/:id" element={<Discussion/>} />
+                <Route exact path="/survey/:id" element={<Survey/>} />
                 <Route exact path="/publisher/:id" element={<PublisherHome/>} />
                 <Route exact path="/publisher/:id/post" element={<PostCreate/>}></Route>
-                <Route path={"*"} element={<Navigate to={"/home"} />} />
+                <Route path={"*"} element={<Navigate to={"/login"} />} />
             </Routes>
             <Footer/>
           </Router>
