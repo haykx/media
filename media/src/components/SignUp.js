@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useNavigate} from "react-router-dom";
+import config from '../config.json';
+import {ApplicationContext} from "./ApplicationContext";
 
 function Login() {
 
@@ -8,52 +10,56 @@ function Login() {
     const [firstName, setFirstName] = useState([]);
     const [lastName, setLastName] = useState([]);
     const [bio, setBio] = useState();
+    const {setLogged} = useContext(ApplicationContext);
     const [password, setPassword] = useState([]);
     const [rePassword, setRePassword] = useState();
+    const PUB_URL = config.PUBLISHER_URL;
+    const UM_URL = config.UM_URL;
 
     const handleSubmit = (e) => {
-      e.preventDefault();
-       if(password !== rePassword) {
-           alert('Passwords do not match!')
-           return;
-       }
+        e.preventDefault();
+        if (password !== rePassword) {
+            alert('Passwords do not match!')
+            return;
+        }
 
-       const b = {
-           email: email,
-           password: password
-       }
+        const b = {
+            email: email,
+            password: password
+        }
 
-      fetch('http://localhost:8030/api/v1/publisher/', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(b)
-      }).then(response => response.json())
-        .then(data => {
-            localStorage.setItem('token', data?.access_token);
-            const bb = {
-                firstName: firstName,
-                lastName: lastName,
-                bio: bio ? bio : null
-            }
-            console.log(JSON.stringify(bb));
-            fetch('http://localhost:8040/api/v1/publisher', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': '*/*',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify(bb)
-            }).then(response => response.json())
-                .then(data => {
-                    navigate('/publisher/'+data?.id);
-                })
-                .catch(e => console.log(e));
+        fetch(`${UM_URL}/api/v1/publisher/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(b)
+        }).then(response => response.json())
+            .then(data => {
+                localStorage.setItem('token', data?.access_token);
+                setLogged(true);
+                const bb = {
+                    firstName: firstName,
+                    lastName: lastName,
+                    bio: bio ? bio : null
+                }
+                console.log(JSON.stringify(bb));
+                fetch(`${PUB_URL}/api/v1/publisher`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': '*/*',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify(bb)
+                }).then(response => response.json())
+                    .then(data => {
+                        navigate('/publisher/' + data?.id);
+                    })
+                    .catch(e => console.log(e));
 
-        })
-        .catch(e => console.log(e));
+            })
+            .catch(e => console.log(e));
 
 
     };

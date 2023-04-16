@@ -1,33 +1,35 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
+import {ApplicationContext} from "./ApplicationContext";
 
 function Header() {
+    const {logged, setLogged} = useContext(ApplicationContext);
+
+    const handleLogout = () => {
+        setLogged(false);
+        localStorage.clear();
+    }
+
     return (
         <header>
             <div className="nav">
                 <Link className="logo" to="/home">Home</Link>
-                <div>
-                    <Link className="sign-up" to="/sign-up" >Sign Up</Link>
-                    <Link className="login" to="/login" >Log In</Link>
-                </div>
+                {
+                    logged ? (
+                        <div>
+                            <Link className="login" to="/login" onClick={handleLogout}>Log Out</Link>
+                        </div>
+                    ) : (
+                        <div>
+                            <Link className="sign-up" to="/sign-up" >Sign Up</Link>
+                            <Link className="login" to="/login" >Log In</Link>
+                        </div>
+                    )
+                }
+
             </div>
         </header>
     );
-}
-const handleLogout = (e) => {
-    localStorage.clear();
-};
-function logged(){
-    if(localStorage.getItem("token")){
-        return (<div>
-            <Link className="login" to={"/login"} onClick={handleLogout}>Log Out</Link>
-        </div>)
-    } else {
-        return (<div>
-            <Link className="sign-up" to="/sign-up" >Sign Up</Link>
-            <Link className="login" to="/login" >Log In</Link>
-        </div>)
-    }
 
 }
 

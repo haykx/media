@@ -133,74 +133,10 @@ header.shadow .logo{
   justify-content: center;
   align-items: center;
 }
-
-.home-text {
-  color: var(--bg-color);
-  text-align: center;
-}
-.home-title {
-  position: relative;
-  -webkit-box-reflect: below -20px linear-gradient(transparent, rgba(0,0,0,.2));
-  font-size: 60px;
-}
-.home-title > span {
-  margin: 0 20px;
-}
-.span1 {
-  font-family: cursive;
-  position: relative;
-  display: inline-block;
-  color: #fff;
-  text-transform: uppercase;
-  animation: waviy 1s infinite cubic-bezier(0.38, 0.65, 0.86, 0.85);
-  animation-delay: .1s;
-}
-.span2 {
-  font-family: cursive;
-  position: relative;
-  display: inline-block;
-  color: #fff;
-  text-transform: uppercase;
-  animation: waviy 1s infinite cubic-bezier(0.38, 0.65, 0.86, 0.85);
-  animation-delay: .2s;
-}
-.span3 {
-  font-family: cursive;
-  position: relative;
-  display: inline-block;
-  color: #fff;
-  text-transform: uppercase;
-  animation: waviy 1s infinite cubic-bezier(0.38, 0.65, 0.86, 0.85);
-  animation-delay: .3s;
-}
-
-
-@keyframes waviy {
-  0%,40%,100% {
-    transform: translateY(0)
-  }
-  20% {
-    transform: translateY(-20px)
-  }
-}
-
-
-.home-subtitle {
-  font-size: 1rem;
-  font-weight: 400;
-  transition: .3s;
-}
-
-.home-subtitle:hover{
-  /*font-size: 2rem;*/
-  font-weight: 800;
-  transition: .3s;
-}
-
 /* posts */
 .post{
-  margin-top: 130px;
-  margin-bottom: 30px;
+  margin-top: 30px;
+  margin-bottom: 130px;
   max-width: 1200px;
   display: grid;
   grid-template-columns: repeat(auto-fit,minmax(322px, 342px));
@@ -212,6 +148,7 @@ header.shadow .logo{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 116px;
   background: var(--bg-color);
   box-shadow: 0 4px 14px rgba(119, 80, 173, 0.403);
   padding: 15px;
@@ -687,4 +624,54 @@ header.shadow .logo{
 
 .hide {
   display: none !important;
+}
+
+.comment input, .comment textarea {
+  resize: vertical;
+  box-shadow: 0 4px 14px rgba(119, 80, 173, 0.403);
+  margin-top: 5px;
+  border: none;
+  padding: 8px;
+  font-weight: bolder;
+  border-radius: 15px;
+}
+
+.comment select {
+  box-shadow: 0 4px 14px rgba(119, 80, 173, 0.403);
+  margin-top: 5px;
+  font-weight: bolder;
+  padding: 8px;
+}
+
+input[type="radio"] {
+  box-shadow: 0 4px 14px rgba(119, 80, 173, 0.403);
+  margin-right: 10px;
+  appearance: none;
+  outline: var(--container-color) solid 1px;
+  background-color: var(--bg-color);
+  transition: 0.2s;
+}
+
+input[type="radio"]:checked {
+  background-color: var(--container-color);
+}
+
+input[type="checkbox"] {
+  box-shadow: 0 4px 14px rgba(119, 80, 173, 0.403);
+  margin-right: 10px;
+  appearance: none;
+  outline: black solid 1px;
+  background-color: var(--bg-color);
+  border-radius: 2px;
+  transition: 0.2s;
+}
+
+input[type="checkbox"]:hover {
+  background-color: var(--second-color);
+}
+input[type="checkbox"]:checked:hover {
+  background-color: var(--second-color);
+}
+input[type="checkbox"]:checked {
+  background-color: var(--container-color);
 }

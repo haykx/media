@@ -6,7 +6,6 @@ function Home() {
     const {page} = useParams();
     return (
         <div>
-            {/*<HomeHead/>*/}
             <DiscussionContainer page={page}/>
         </div>
 

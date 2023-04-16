@@ -1,55 +1,47 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import CommentBox from "./CommentBox";
 import Like from "./Like";
 import AddComment from "./AddComment";
+import config from '../config.json';
+import {ApplicationContext} from "./ApplicationContext";
 
 
 function Discussion() {
 
-    const [discussion, setDiscussion] = useState({});
+    const [discussion, setDiscussion] = useState({
+        created: null,
+        liked: false
+    });
     const [publisher, setPublisher] = useState();
     const navigate = useNavigate();
+    const {logged} = useContext(ApplicationContext);
     const {id} = useParams();
-    const token = 'Bearer ' + localStorage.getItem('token');
+    const token = localStorage.getItem("token") ? "Bearer "+localStorage.getItem("token") : null;
+    const PUB_URL = config.PUBLISHER_URL;
 
     useEffect(() => {
-        fetch(`http://localhost:8040/api/v1/discussion/${id}`,{
-            headers : {
+        fetch(`${PUB_URL}/api/v1/discussion/${id}`, {
+            headers: token? {
                 "Authorization": token
-            }
+            } : {}
         })
             .then(response => response.json())
             .then(data => {
                 setDiscussion(data);
-                fetch(`http://localhost:8040/api/v1/publisher/${data.publisherId}`, {
-                    headers : {
-                        "Authorization": token
-                    }
-                })
-                .then(response => response.json())
-                .then(data => setPublisher(data))
-                .catch(e => console.log(e));
+                fetch(`${PUB_URL}/api/v1/publisher/${data.publisherId}`, {})
+                    .then(response => response.json())
+                    .then(data => setPublisher(data))
+                    .catch(e => console.log(e));
             })
-            .catch(e => navigate('/home'));
-    }, [id]);
-
-    let links;
-
-    if(discussion.link){
-        links = (<section className='useful-link'>
-            <p>Օգտակար հղումներ`</p>
-            <a href={discussion.link} target={'_blank'}>{discussion.link}</a>
-        </section>);
-    } else {
-        links = '';
-    }
+            .catch(() => navigate('/home'));
+    }, [PUB_URL, id, navigate, token]);
 
 
     return (
         <div className={'container'}>
             <div className={'discussion'}>
-                <div onClick={e => navigate(-1)} className={'back-home'}>
+                <div onClick={() => navigate(-1)} className={'back-home'}>
                     <svg viewBox="0 0 1024 1024" className="icon" version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_iconCarrier">
                             <path
@@ -70,13 +62,25 @@ function Discussion() {
                         {publisher?.firstName} {publisher?.lastName}
                     </div>
                     <div>
-                        {new Date(discussion?.created).toLocaleDateString("en", {year: 'numeric', month: 'short', day: 'numeric' , hour: 'numeric', minute:'2-digit'})}
+                        {new Date(discussion?.created).toLocaleDateString("en", {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: '2-digit'
+                        })}
                     </div>
                 </div>
-                <Like scope={'discussion'} id={discussion.id} likes={discussion?.likes} isLiked={discussion.liked} />
+                {logged ? (
+                    <Like scope={'discussion'} id={discussion.id} likes={discussion?.likes} isLiked={discussion.liked}/>
+                ) : null}
             </div>
-            <h4>Comments:</h4>
-            <AddComment scope={'discussion'} parent={discussion.id} />
+            {discussion?.comments?.length > 0 ? (
+                <h4>Comments:</h4>
+            ) : null}
+            {logged ? (
+                <AddComment scope={'discussion'} parent={discussion.id}/>
+            ) : null}
             <CommentBox comments={discussion?.comments}></CommentBox>
 
         </div>

@@ -1,43 +1,50 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useNavigate} from "react-router-dom";
+import config from '../config.json';
+import {ApplicationContext} from "./ApplicationContext";
 
 function Login() {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState([])
     const [password, setPassword] = useState([])
+    const {setLogged} = useContext(ApplicationContext);
+    const PUB_URL = config.PUBLISHER_URL;
+    const UM_URL = config.UM_URL;
 
     const handleSubmit = (e) => {
-      e.preventDefault();
+        e.preventDefault();
 
         const b = {
             email: email,
             password: password
         }
 
-      fetch('http://localhost:8030/api/v1/login', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(b)
-      }).then(response => response.json())
-        .then(data => {
-            console.log(data?.access_token);
-            localStorage.setItem('token', data?.access_token);
-            fetch('http://localhost:8040/api/v1/publisher', {
-                method: 'POST',
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem('token')}`
-                }
-            }).then(response => response.json())
-                .then(data => {
-                    navigate('/publisher/'+data?.id);
-                })
-                .catch(e => console.log(e));
+        fetch(`${UM_URL}/api/v1/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(b)
+        }).then(response => response.json())
+            .then(data => {
+                console.log(data?.access_token);
+                localStorage.setItem('token', data?.access_token);
+                setLogged(true);
+                fetch(`${PUB_URL}/api/v1/publisher`, {
+                    method: 'POST',
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem('token')}`
+                    }
+                }).then(response => response.json())
+                    .then(data => {
 
-        })
-        .catch(e => console.log(e));
+                        navigate('/publisher/' + data?.id);
+                    })
+                    .catch(() => alert("Invalid credentials"));
+
+            })
+            .catch(() => alert("Invalid credentials"));
 
 
     };

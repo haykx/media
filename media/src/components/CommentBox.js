@@ -14,7 +14,7 @@ function CommentBox(props) {
 
     return (
         <div className={'comments'}>
-            {comments?.map((e,i) => (
+            {comments?.map((e) => (
                 <Comment comment={e} size={defaultSize}/>
             ))}
         </div>

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import config from '../config.json';
 
 function AddComment(props) {
 
@@ -7,6 +8,7 @@ function AddComment(props) {
     const [scope, setScope] = useState();
     const [parent, setParent] = useState();
     const token = 'Bearer ' + localStorage.getItem('token');
+    const PUB_URL = config.PUBLISHER_URL;
 
     useEffect(() => {
         setAdd(false);
@@ -32,7 +34,7 @@ function AddComment(props) {
             return;
         }
 
-        fetch(`http://localhost:8040/api/v1/comment`,{
+        fetch(`${PUB_URL}/api/v1/comment`,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
