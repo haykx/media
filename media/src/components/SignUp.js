@@ -9,8 +9,8 @@ function Login() {
     const [email, setEmail] = useState([]);
     const [firstName, setFirstName] = useState([]);
     const [lastName, setLastName] = useState([]);
-    const [bio, setBio] = useState();
-    const {setLogged} = useContext(ApplicationContext);
+    const [dob, setDob] = useState();
+    const {setLogged, setPublisher} = useContext(ApplicationContext);
     const [password, setPassword] = useState([]);
     const [rePassword, setRePassword] = useState();
     const PUB_URL = config.PUBLISHER_URL;
@@ -41,7 +41,7 @@ function Login() {
                 const bb = {
                     firstName: firstName,
                     lastName: lastName,
-                    bio: bio ? bio : null
+                    dateOfBirth: dob
                 }
                 console.log(JSON.stringify(bb));
                 fetch(`${PUB_URL}/api/v1/publisher`, {
@@ -54,6 +54,7 @@ function Login() {
                     body: JSON.stringify(bb)
                 }).then(response => response.json())
                     .then(data => {
+                        setPublisher(data);
                         navigate('/publisher/' + data?.id);
                     })
                     .catch(e => console.log(e));
@@ -82,10 +83,11 @@ function Login() {
                     required
                 />
                 <input
-                    type='text'
-                    placeholder='Bio'
-                    onChange={e => setBio(e?.target?.value)}
-                    value={bio}
+                    type='date'
+                    placeholder='Date Of birth'
+                    onChange={e => setDob(e?.target?.value)}
+                    value={dob}
+                    required
                 />
                 <input
                     type='email'

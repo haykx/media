@@ -3,12 +3,13 @@ import {Link} from 'react-router-dom';
 import {ApplicationContext} from "./ApplicationContext";
 
 function Header() {
-    const {logged, setLogged} = useContext(ApplicationContext);
+    const {logged, setLogged, publisher} = useContext(ApplicationContext);
 
     const handleLogout = () => {
         setLogged(false);
         localStorage.clear();
     }
+    const path = "/publisher/"+publisher?.id;
 
     return (
         <header>
@@ -17,6 +18,9 @@ function Header() {
                 {
                     logged ? (
                         <div>
+                            { publisher?.id ? (
+                                <Link className="sign-up" to={path}>Create</Link>
+                            ) : null}
                             <Link className="login" to="/login" onClick={handleLogout}>Log Out</Link>
                         </div>
                     ) : (

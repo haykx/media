@@ -8,7 +8,7 @@ function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState([])
     const [password, setPassword] = useState([])
-    const {setLogged} = useContext(ApplicationContext);
+    const {setLogged, setPublisher} = useContext(ApplicationContext);
     const PUB_URL = config.PUBLISHER_URL;
     const UM_URL = config.UM_URL;
 
@@ -38,7 +38,7 @@ function Login() {
                     }
                 }).then(response => response.json())
                     .then(data => {
-
+                        setPublisher(data);
                         navigate('/publisher/' + data?.id);
                     })
                     .catch(() => alert("Invalid credentials"));

@@ -21,9 +21,10 @@ window.addEventListener('scroll', () => {
 function App() {
 
     const [logged, setLogged] = useState(!!localStorage.getItem("token"));
+    const [publisher, setPublisher] = useState({});
 
     return (
-        <ApplicationContext.Provider value={{logged, setLogged}}>
+        <ApplicationContext.Provider value={{logged, setLogged, publisher, setPublisher}}>
             <div className="App">
                 <Router>
                     <Header/>

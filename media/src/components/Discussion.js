@@ -13,9 +13,8 @@ function Discussion() {
         created: null,
         liked: false
     });
-    const [publisher, setPublisher] = useState();
     const navigate = useNavigate();
-    const {logged} = useContext(ApplicationContext);
+    const {logged, publisher, setPublisher} = useContext(ApplicationContext);
     const {id} = useParams();
     const token = localStorage.getItem("token") ? "Bearer "+localStorage.getItem("token") : null;
     const PUB_URL = config.PUBLISHER_URL;
