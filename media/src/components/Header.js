@@ -1,15 +1,32 @@
 import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
 import {ApplicationContext} from "./ApplicationContext";
+import config from "../config.json";
 
 function Header() {
-    const {logged, setLogged, publisher} = useContext(ApplicationContext);
+    const {logged, setLogged, publisher, setPublisher} = useContext(ApplicationContext);
+    const PUB_URL = config.PUBLISHER_URL;
+    const token = "Bearer " + localStorage.getItem("token");
+    const path = "/publisher/"+publisher?.id;
 
     const handleLogout = () => {
         setLogged(false);
         localStorage.clear();
     }
-    const path = "/publisher/"+publisher?.id;
+
+    const me = () => {
+        fetch(`${PUB_URL}/api/v1/publisher/me`, {
+            headers: token
+        }).then(res => res.json())
+            .then(data => setPublisher(data))
+            .catch(e => console.log(e));
+
+        return null;
+    }
+
+    if(!publisher){
+        me();
+    }
 
     return (
         <header>
@@ -18,9 +35,7 @@ function Header() {
                 {
                     logged ? (
                         <div>
-                            { publisher?.id ? (
-                                <Link className="sign-up" to={path}>Create</Link>
-                            ) : null}
+                            <Link className="sign-up" to={path}>My discussions</Link>
                             <Link className="login" to="/login" onClick={handleLogout}>Log Out</Link>
                         </div>
                     ) : (

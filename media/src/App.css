@@ -80,16 +80,19 @@ header.shadow .logo{
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 0;
+  padding: 18px 5%;
   /*background: var(--container-color);*/
   box-sizing: border-box;
 }
 .nav div {
   height: 100%;
+  width: 20rem;
+  min-width: 265px;
+  display: flex;
+  justify-content: space-between;
 }
 .logo {
   font-size: 1.5rem;
-  margin: 0 2rem;
   font-weight: 600;
   color: white;
 }
@@ -97,7 +100,6 @@ header.shadow .logo{
 .login {
   padding: 8px 14px;
   text-transform: uppercase;
-  margin: 0 2rem;
   font-weight: 500;
   border-radius: 20px;
   background: var(--second-color);
@@ -112,7 +114,6 @@ header.shadow .logo{
 .sign-up {
   padding: 8px 14px;
   text-transform: uppercase;
-  margin: 0 2rem;
   font-weight: 500;
   border-radius: 20px;
   background: var(--second-color);
@@ -184,14 +185,8 @@ header.shadow .logo{
 }
 
 .flicker {
-  /*color: #2c2a2a61;*/
-  /*background: -webkit-gradient(linear, left top, right top, from(#7c7979), to(#1d1c1c), color-stop(0.8, #7e7b7b)) no-repeat;*/
-  /*background: gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.8, #fff)) no-repeat;*/
   background-size: 110px 100%;
   color: var(--text-color);
-  /*-webkit-background-clip: text;*/
-  /*background-clip: text;*/
-  /*animation: flick 1.5s forwards;*/
 }
 
 
@@ -432,14 +427,16 @@ header.shadow .logo{
 .post-create-form textarea {
   width: 100%;
   resize: vertical;
+  height: 50%;
 }
 
 .post-create-form input {
   margin: 20px 0;
-  width: fit-content;
+  width: 100%;
 }
 
 .post-create-form textarea, .post-create-form input {
+  max-width: 650px;
   padding: 3px 5px;
   border-radius: 10px;
   border: none;
